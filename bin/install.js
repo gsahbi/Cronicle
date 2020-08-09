@@ -1,9 +1,9 @@
 // Cronicle Auto Installer
 // Copyright (c) 2015 - 2019 Joseph Huckaby, MIT License.
-// https://github.com/jhuckaby/Cronicle
+// https://github.com/gsahbi/Cronicle
 
 // To install, issue this command as root:
-// curl -s "https://raw.githubusercontent.com/jhuckaby/Cronicle/master/bin/install.js" | node
+// curl -s "https://raw.githubusercontent.com/gsahbi/Cronicle/master/bin/install.js" | node
 
 var path = require('path');
 var fs = require('fs');
@@ -15,9 +15,8 @@ var installer_version = '1.3';
 var base_dir = '/opt/cronicle';
 var log_dir = base_dir + '/logs';
 var log_file = '';
-var gh_repo_url = 'http://github.com/jhuckaby/Cronicle';
-var gh_releases_url = 'https://api.github.com/repos/jhuckaby/Cronicle/releases';
-var gh_head_tarball_url = 'https://github.com/jhuckaby/Cronicle/archive/master.tar.gz';
+var gh_releases_url = 'https://api.github.com/repos/gsahbi/Cronicle/releases';
+var gh_head_tarball_url = 'https://github.com/gsahbi/Cronicle/archive/master.tar.gz';
 
 // don't allow npm to delete these (ugh)
 var packages_to_check = ['couchbase', 'aws-sdk', 'redis'];
@@ -102,7 +101,7 @@ if (is_preinstalled) {
 print( "Fetching release list...\n");
 logonly( "Releases URL: " + gh_releases_url + "\n" );
 
-cp.exec('curl -s ' + gh_releases_url, function (err, stdout, stderr) {
+cp.exec('wget -qO- ' + gh_releases_url, function (err, stdout, stderr) {
 	if (err) {
 		print( stdout.toString() );
 		warn( stderr.toString() );
@@ -167,7 +166,7 @@ cp.exec('curl -s ' + gh_releases_url, function (err, stdout, stderr) {
 	var tarball_url = release.tarball_url;
 	logonly( "Tarball URL: " + tarball_url + "\n" );
 	
-	cp.exec('curl -L ' + tarball_url + ' | tar zxf - --strip-components 1', function (err, stdout, stderr) {
+	cp.exec('wget -qO- ' + tarball_url + ' | tar zxf - --strip-components 1', function (err, stdout, stderr) {
 		if (err) {
 			print( stdout.toString() );
 			warn( stderr.toString() );
