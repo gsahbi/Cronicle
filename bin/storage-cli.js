@@ -385,7 +385,7 @@ var storage = new StandaloneStorage(config.Storage, function(err) {
 				var page_idx = list.first_page;
 				var item_idx = 0;
 				async.whilst(
-					function() { return page_idx <= list.last_page; },
+					async () => { return page_idx <= list.last_page; },
 					function(callback) {
 						// load each page
 						storage._listLoadPage(key, page_idx++, false, function(err, page) {
@@ -509,7 +509,7 @@ function export_data(file) {
 						var page_idx = list.first_page;
 						
 						async.whilst(
-							function() { return page_idx <= list.last_page; },
+							async () => { return page_idx <= list.last_page; },
 							function(callback) {
 								// load each page
 								var page_key = list_key + '/' + page_idx;
